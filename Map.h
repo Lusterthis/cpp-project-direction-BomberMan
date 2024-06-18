@@ -1,7 +1,10 @@
 #pragma once
 #include<vector>
 #include<graphics.h>
-#include"Player.h"
+//
+#include "Pos.h"
+#include<ctime>
+#include<random>
 using namespace std;
 
 enum Type {
@@ -13,9 +16,10 @@ enum Type {
 };
 class Map
 {
+	/*class Player* p;*/
 	int Rows,Cols;
 	int marginX, marginY;
-	int cellSize=20;//by default
+	int cellSize=35;//by default
 	IMAGE PlayerImg;
 	IMAGE BarrierImg;
 	IMAGE BombImg1;
@@ -41,10 +45,17 @@ public:
 	}
 	void Init();
 	vector<vector<int>>& getMap();
-	void printMap();
+	void printMap(Pos pos);
 	void setPlayer(int x,int y);
 	void setPlayer(Pos pos);//function overload;
-	double FormTrans(double n);
+	void leavePlayer(Pos pos);
+	double FormTransx(double n);
+	double FormTransy(double n);
+	bool accessible(int x,int y);
+	bool accessible(Pos pos);
+	void layBomb(Pos pos);
+	void scene0();
+	void scenex();
 	
 };
 

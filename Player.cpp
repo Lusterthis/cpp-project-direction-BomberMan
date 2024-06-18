@@ -6,23 +6,33 @@ Player::Player(int x, int y)
 	pos.y = y;
 }
 
-void Player::action(MSG& msg)
+void Player::action(ExMessage& msg,Map *m)
 {
+	
+	//m->leavePlayer(getPos());
+		switch (msg.vkcode) {
+		case VK_UP:
+			--pos.y;
+			if (!m->accessible(getPos())) { ++pos.y; }
+				break;
+		case VK_DOWN:
+			++pos.y;//这个加减容易搞错
+			if (!m->accessible(getPos())) { --pos.y; }
+				break;
+		case VK_LEFT:
+			--pos.x;
+			if (!m->accessible(getPos())) { ++pos.x; }
+				break;
+		case VK_RIGHT:
+			++pos.x;
+			if (!m->accessible(getPos())) { --pos.x; }
+			break;
+		case VK_MENU://alt key
 
-	switch (msg.message) {
-	case VK_UP:
-		--pos.y;
-		break;
-	case VK_DOWN:
-		++pos.y;//这个加减容易搞错
-		break;
-	case VK_LEFT:
-		--pos.x;
-		break;
-	case VK_RIGHT:
-		++pos.x;
-		break;
-	}
+			m->layBomb(pos);
+			break;
+		}
+		
 }
 
 bool Player::destroy(Map* m)
@@ -38,4 +48,14 @@ bool Player::destroy(Map* m)
 Pos Player::getPos()
 {
 	return pos;
+}
+
+int Player::getX()
+{
+	return pos.x;
+}
+
+int Player::getY()
+{
+	return pos.y;
 }

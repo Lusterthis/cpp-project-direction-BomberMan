@@ -11,17 +11,30 @@ Game::Game(Map* m,Player* p)
 void Game::play()
 {
 	m->Init();
-	MSG msg;
+	//m->scene0();
+	m->scenex();
+	ExMessage msg ;
+	Pos tmp;
 	while (1) {
 
-		//m->setPlayer(p->getPos());
-		PeekMessage(&msg, NULL, 0, 0, PM_REMOVE);//check cin stream while execute program
-		if (msg.message == VK_SPACE) {
+		/*m->setPlayer(p->getPos());*/
+		bool b = peekmessage(&msg);//check cin stream while execute program
+
+		while (b&&msg.message == WM_KEYDOWN&&msg.wParam == VK_SPACE) {
 			system("pause");
 		}
-		p->action(msg);
-		m->printMap();
+
 		
+		if(b&&msg.message==WM_KEYDOWN)
+		{
+			
+			p->action(msg,m);//change the postion of player or perform some act?
+		}
+
+		m->printMap(p->getPos());
+		FlushBatchDraw();//print all the dynamics at the same time in case of flash;
+		//printf(".");
+
 		Sleep(16);
 	}
 }

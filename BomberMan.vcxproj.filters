@@ -44,5 +44,8 @@
     <ClInclude Include="Dynamics.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Pos.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,7 +8,7 @@ private:
 
 public:
 	void shake();
-	virtual void action(MSG& msg) = 0;
+	virtual void action(ExMessage& msg,Map *m) = 0;
 	virtual bool destroy(Map *m) = 0;
 };
 
