@@ -9,19 +9,19 @@ void Player::action(ExMessage& msg,Map *m)
 		switch (msg.vkcode) {
 		case VK_UP:
 			--pos.y;
-			if (!m->accessible(getPos())) { ++pos.y; }
+			if (!m->accessible(getPos())&&!m->ism2(pos.x,pos.y)) { ++pos.y; }
 				break;
 		case VK_DOWN:
 			++pos.y;//这个加减容易搞错
-			if (!m->accessible(getPos())) { --pos.y; }
+			if (!m->accessible(getPos()) && !m->ism2(pos.x, pos.y)) { --pos.y; }
 				break;
 		case VK_LEFT:
 			--pos.x;
-			if (!m->accessible(getPos())) { ++pos.x; }
+			if (!m->accessible(getPos()) && !m->ism2(pos.x, pos.y)) { ++pos.x; }
 				break;
 		case VK_RIGHT:
 			++pos.x;
-			if (!m->accessible(getPos())) { --pos.x; }
+			if (!m->accessible(getPos()) && !m->ism2(pos.x, pos.y)) { --pos.x; }
 			break;
 		//case VK_MENU://alt key
 
@@ -86,4 +86,38 @@ int Player::getLevel()
 void Player::setLevel(int l)
 {
 	level = l;
+}
+
+void Player::beBlown(Map* m)
+{
+
+	int s=m->searchM(pos.x,pos.y);
+	if (s == 666) {
+		this->level += 1;
+		m->setM(pos, 0);
+
+	}
+	else if (s == -1) {
+		this->lives -= 1;
+		//this->status = -3;
+		pos.x = 0, pos.y = 0;
+	}
+	else if (s == -2) {
+		this->lives -= 1;
+		//this->status = -3;
+		pos.x = 0, pos.y = 0;
+	}
+}
+
+bool Player::fail()
+{
+	return lives<=0;
+}
+
+void Player::loserdraw(Map* m)
+{
+	system("cls");
+	putimagePNG(m->FormTransx(6), m->FormTransy(6), &loserImg);
+	Sleep(2000);
+	//system("pause");
 }

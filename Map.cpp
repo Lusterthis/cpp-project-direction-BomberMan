@@ -7,8 +7,6 @@
 #include<conio.h>
 
 
-
-
 void putimagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
 {
 	// 变量初始化
@@ -44,6 +42,9 @@ void putimagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
 		}
 	}
 }
+
+
+
 
 void Map::Init()
 {
@@ -103,6 +104,10 @@ void Map::printMap(Pos pos)
 		for (int j = 0; j < Rows; ++j) 
 		{
 			switch (map[i][j]) {
+			case 666:
+				putimagePNG(FormTransx(i), FormTransy(j), &TacoImg);
+				//putimagePNG(FormTransx(i), FormTransy(j), &BoxImg);
+				
 			case -1:
 				putimagePNG(FormTransx(i), FormTransy(j), &FireImg);
 				break;
@@ -111,12 +116,12 @@ void Map::printMap(Pos pos)
 			case 1:
 				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
 				break;
-			case 5:
-				BombBlow(i,j);
-				break;
 			case 2:
-				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
+			
+				putimagePNG(FormTransx(i), FormTransy(j), &BoxImg);
 				break;
+			
+			
 
 			}
 		}
@@ -158,12 +163,27 @@ double Map::FormTransy(double posn)
 
 bool Map::accessible(int x,int y)
 {
-	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == 0;
+	return x >= 0 && y >= 0 && x < Cols && y < Rows &&( map[x][y] == 0 ||map[x][y] == -1||map[x][y]==666);
 }
 
 bool Map::accessible(Pos pos)
 {
-	return pos.x>=0&&pos.y>=0&&pos.x<Cols&&pos.y<Rows&&map[pos.x][pos.y] == 0;
+	return pos.x >= 0 && pos.y >= 0 && pos.x < Cols && pos.y < Rows && (map[pos.x][pos.y] == 0 || map[pos.x][pos.y] == -1|| map[pos.x][pos.y] == 666);
+}
+
+bool Map::is2(Pos pos)
+{
+	return pos.x >= 0 && pos.y >= 0 && pos.x < Cols && pos.y < Rows && map[pos.x][pos.y] == 2;
+}
+
+bool Map::is2(int x, int y)
+{
+	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == 2;
+}
+
+bool Map::ism2(int x, int y)
+{
+	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == -2;
 }
 
 void Map::layBomb(Pos pos)
@@ -184,7 +204,7 @@ void Map::scene0()
 
 void Map::scenex()
 {
-	srand(time(0));
+	//srand(time(0));
 	for (int i = 2; i < Cols; ++i) {
 		for (int j = 2; j < Rows; ++j) {
 			int r = rand() % 10;
@@ -192,6 +212,29 @@ void Map::scenex()
 			map[i][j] = 1;
 		}
 	}
+	
+}
+
+void Map::box()
+{
+	for (int i = 2; i < Cols; ++i) {
+		for (int j = 2; j < Rows; ++j) {
+			int r = rand() % 10;
+			if (r < 1&&accessible(i,j))
+				map[i][j] = 2;
+		}
+	}
+}
+
+void Map::taco()
+{
+	int x, y;
+	do {
+		 x = rand() % Cols;
+		 y = rand() % Rows;
+	} while (is2(x, y));
+	map[x][y] = 666;
+	//putimagePNG(FormTransx(x), FormTransy(y), &TacoImg);
 }
 
 void Map::BombBlow(int x,int y)
@@ -200,6 +243,23 @@ void Map::BombBlow(int x,int y)
 	if(bombnum)
 	putimagePNG(FormTransx(x), FormTransy(y), &BombImg1);//lay bomb;
 
+}
+
+int Map::searchM(int x, int y)
+{
+	return map[x][y];
+}
+
+void Map::setM(Pos pos, int g)
+{
+	if(accessible(pos)||is2(pos.x,pos.y)||ism2(pos.x,pos.y))
+	map[pos.x][pos.y] = g;
+}
+
+void Map::setM(int x, int y, int g)
+{
+	if(accessible(x,y)||is2(x,y)||ism2(x,y))//in case of overstep
+	map[x][y] = g;
 }
 
 

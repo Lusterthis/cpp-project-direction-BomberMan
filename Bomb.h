@@ -25,12 +25,13 @@ public:
    }
     void action(ExMessage& msg, Map* m);
     void setPos(Pos posn);
-    void blowUp();
+    void blowUp(Map * m,int level);
     IMAGE* getImg();
     IMAGE* getImg2();
     int getX();
     int getY();
     Pos getPos();
     int getStatus();
+
 };
 

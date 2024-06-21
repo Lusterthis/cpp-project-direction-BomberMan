@@ -7,8 +7,10 @@ class Enemy :
     public Dynamics
 
 {
+private:
+    Pos pos;
 public:
-  
+    
     virtual void action(ExMessage& msg, Map* m)=0;
     
 };

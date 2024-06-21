@@ -3,7 +3,7 @@
 
 int main() {
 	
-	Map grass(257, 86, 30, 10);
+	Map grass(257, 86, 30, 15);
 	Player p(0, 0,grass.getCellSize());
 	Game game(&grass,&p);
 	

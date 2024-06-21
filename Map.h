@@ -5,6 +5,8 @@
 #include<random>
 //
 #include "Pos.h"
+#include"pch.h"
+#include<graphics.h>
 
 using namespace std;
 
@@ -31,11 +33,15 @@ class Map
 	IMAGE BombImg1;
 	IMAGE FireImg;
 	IMAGE ENEMY1;
+	IMAGE TacoImg;
+	IMAGE BoxImg;
 	vector<vector<int>>map;
 	vector<vector<int>>status;
 public:
 	
 	Map(int marginX, int marginY, int Cols, int Rows) {
+		loadimage(&TacoImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
+		loadimage(&BoxImg, L"rsc/reanim/box.png", cellSize, cellSize, true);
 		this->marginX = marginX;
 		this->marginY = marginY;
 		this->Rows =Rows ;
@@ -51,6 +57,7 @@ public:
 		map[0][0] = 5;
 	}
 	void Init();
+	
 	int getCols();
 	int getRows();
 	int getCellSize();
@@ -64,9 +71,17 @@ public:
 	double FormTransy(double n);
 	bool accessible(int x,int y);
 	bool accessible(Pos pos);
+	bool is2(Pos pos);
+	bool is2(int x, int y);
+	bool ism2(int x, int y);
 	void layBomb(Pos pos);
 	void scene0();
 	void scenex();
+	void box();
+	void taco();
 	void BombBlow(int x,int y);
+	int searchM(int x, int y);
+	void setM(Pos pos,int g);
+	void setM(int x, int y, int g);
 };
 
