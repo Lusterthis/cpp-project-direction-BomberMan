@@ -1,9 +1,11 @@
 #include "Map.h"
+#include"Enemy1.h"
 
 #include<mmsystem.h>
 #include<math.h>
 #pragma comment(lib,"winmm.lib")
 #include<conio.h>
+
 
 
 
@@ -50,7 +52,7 @@ void Map::Init()
 	BeginBatchDraw();
 	
 	//mciSendString(L"play rsc/bgm/lawnbgm.mp3", 0, 0, 0);
-	loadimage(&PlayerImg, L"rsc/reanim/Taco.png", cellSize, cellSize, true);
+	
 	loadimage(&BarrierImg, L"rsc/reanim/Tallnut_body.png", cellSize, cellSize, true);
 	loadimage(&BombImg1, L"rsc/reanim/Cherrybomb1.png", cellSize, cellSize, true);
 	//Initial
@@ -61,6 +63,29 @@ void Map::Init()
 		//map[0][0] = 5;
 		
 	}
+	//MyClass* myArray = static_cast<MyClass*>(operator new[](n * sizeof(MyClass)));
+	//Enemy1* e1 = static_cast<Enemy*>(operator new[](n * sizeof(Enemy1));
+	Enemy1* e1 = new Enemy1(this);
+}
+
+int Map::getCols()
+{
+	return Cols;
+}
+
+int Map::getRows()
+{
+	return Rows;
+}
+
+int Map::getCellSize()
+{
+	return cellSize;
+}
+
+int Map::getLevel()
+{
+	return level;
 }
 
 vector<vector<int>>& Map::getMap()
@@ -87,7 +112,7 @@ void Map::printMap(Pos pos)
 				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
 				break;
 			case 5:
-				putimagePNG(FormTransx(i), FormTransy(j), &BombImg1);//lay bomb;
+				BombBlow(i,j);
 				break;
 			case 2:
 				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
@@ -98,7 +123,7 @@ void Map::printMap(Pos pos)
 	}
 
 
-	putimagePNG(FormTransx(pos.x),FormTransy(pos.y), &PlayerImg);
+	
 }
 
 void Map::setPlayer(int x, int y)
@@ -167,6 +192,14 @@ void Map::scenex()
 			map[i][j] = 1;
 		}
 	}
+}
+
+void Map::BombBlow(int x,int y)
+{
+
+	if(bombnum)
+	putimagePNG(FormTransx(x), FormTransy(y), &BombImg1);//lay bomb;
+
 }
 
 
