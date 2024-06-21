@@ -7,6 +7,7 @@ private:
     Pos pos;
     IMAGE enemy1Img;
     int state=1;
+    int random = 0;
 public:
     Enemy1(Map *m) {
         setPos(m);
@@ -19,5 +20,6 @@ public:
     Pos getPos();
     int getX();
     int getY();
+    void setr(int r);//set the random number;
 };
 

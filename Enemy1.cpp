@@ -8,7 +8,7 @@ IMAGE* Enemy1::getImg()
 
 void Enemy1::setPos(Map* m)
 {
-	srand(time(0));
+	//srand(time(0));
 	int x, y;
 	do {
 		 x = rand() % m->getCols();
@@ -25,8 +25,8 @@ void Enemy1::action(ExMessage& msg, Map* m)
 		return;
 	}
 	state = 1;
-	srand(time(0));
-	int dir = rand() % 4;
+	
+	int dir = random % 4;
 	switch (dir) {
 	case 0:
 		--pos.x;
@@ -61,4 +61,9 @@ int Enemy1::getX()
 int Enemy1::getY()
 {
 	return pos.y;
+}
+
+void Enemy1::setr(int r)
+{
+	random = r;
 }

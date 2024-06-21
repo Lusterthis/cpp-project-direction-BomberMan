@@ -17,7 +17,8 @@ Game::Game(Map* m,Player* p)
 void Game::play()
 {
 	m->Init();
-	 
+	srand(time(0));
+
 	//m->scene0();
 	m->scenex();
 	ExMessage msg ;
@@ -27,7 +28,7 @@ void Game::play()
 	for (int i = 0; i <Enemynum;++i) {
 		Enemy1* e = new Enemy1(m);
 		e1.push_back(e);
-		Sleep(100);
+		
 	}
 	Pos tmp;
 	while (1) {
@@ -43,6 +44,7 @@ void Game::play()
 		
 		if(b&&msg.message==WM_KEYDOWN)
 		{
+
 			p->action(msg,m);//change the postion of player or perform some act?
 			if (msg.vkcode == VK_MENU) {
 				Bomb* bomb = new Bomb(p->getPos(), m->getCellSize());
@@ -73,9 +75,11 @@ void Game::play()
 		}
 		int tmp = 0;
 		for (Enemy1* e : e1) {
+			
 			if (e == nullptr) { continue; }
 			
 			if (1) {
+				e->setr(rand());
 				++tmp;
 				e->action(msg, m);
 				e->putimagePNG(m->FormTransx(e->getX()), m->FormTransy(e->getY()), e->getImg());
