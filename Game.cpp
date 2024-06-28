@@ -1,10 +1,7 @@
 #include "Game.h"
 
 
-enum initState {
-	menu,
-	playing
-};
+
 
 Game::Game(Map* m,Player* p)
 {
@@ -16,6 +13,8 @@ Game::Game(Map* m,Player* p)
 
 void Game::play()
 {
+	mciSendString(L"play rsc/bgm/lawnbgm.mp3", 0, 0, 0);
+	//play video
 	m->Init();
 	srand(time(0));
 
@@ -38,8 +37,11 @@ void Game::play()
 		bool b = peekmessage(&msg);//check cin stream while execute program
 
 		if(b&&msg.message == WM_KEYDOWN&&msg.vkcode == VK_SPACE) {
-			
+			mciSendString(L"pause rsc/bgm/lawnbgm.mp3", 0, 0, 0);
 			system("pause");
+			
+			//Sleep(3000);
+			mciSendString(L"resume rsc/bgm/lawnbgm.mp3", 0, 0, 0);
 		}
 
 		
@@ -64,7 +66,7 @@ void Game::play()
 			}
 			else if (bomb->getStatus() >= 0) {
 				bomb->putimagePNG(m->FormTransx(bomb->getX()), m->FormTransy(bomb->getY()), bomb->getImg());
-				if (bomb->getStatus() > 15) {//until 45
+				if (bomb->getStatus() > 45) {//until 45
 					for (int i = 1; i <= p->getLevel(); ++i) {
 						bomb->putimagePNG(m->FormTransx(bomb->getX() + i), m->FormTransy(bomb->getY()), bomb->getImg2());
 						bomb->putimagePNG(m->FormTransx(bomb->getX() - i), m->FormTransy(bomb->getY()), bomb->getImg2());
@@ -100,6 +102,7 @@ void Game::play()
 
 		Sleep(16);
 	}
+	mciSendString(L"close rsc/bgm/lawnbgm.mp3", 0, 0, 0);
 	if (p->fail()) {
 		
 		p->loserdraw(m);

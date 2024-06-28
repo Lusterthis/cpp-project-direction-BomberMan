@@ -1,6 +1,7 @@
 #include "Map.h"
 #include"Enemy1.h"
 
+
 #include<mmsystem.h>
 #include<math.h>
 #pragma comment(lib,"winmm.lib")
@@ -45,6 +46,25 @@ void putimagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
 
 
 
+
+Map::Map(Setting* set)
+{
+	loadimage(&TacoImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
+	loadimage(&BoxImg, L"rsc/reanim/box.png", cellSize, cellSize, true);
+	this->marginX = set->retmx();
+	this->marginY = set->retmy();
+	this->Rows = set->reth();
+	this->Cols = set->retl();
+	for (int i = 0; i < Cols; ++i) {
+		vector<int>row;
+		for (int j = 0; j < Rows; ++j) {
+			row.push_back(0);
+		}
+
+		this->map.push_back(row);
+	}
+	map[0][0] = 5;
+}
 
 void Map::Init()
 {

@@ -3,9 +3,12 @@
 #include<graphics.h>
 #include<ctime>
 #include<random>
-//
+
+
+//easy to trouble;
 #include "Pos.h"
 #include"pch.h"
+#include"Setting.h"
 #include<graphics.h>
 
 using namespace std;
@@ -56,6 +59,7 @@ public:
 		}
 		map[0][0] = 5;
 	}
+	Map(Setting* set);
 	void Init();
 	
 	int getCols();
