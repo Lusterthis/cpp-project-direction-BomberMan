@@ -8,7 +8,7 @@
 //easy to trouble;
 #include "Pos.h"
 #include"pch.h"
-#include"Setting.h"
+#include"Menu.h"
 #include<graphics.h>
 
 using namespace std;
@@ -25,6 +25,7 @@ enum stage {
 };
 class Map
 {
+	//static void putimagePNG(int x, int y, IMAGE* picture);
 	/*class Player* p;*/
 	int Rows,Cols;
 	int marginX, marginY;
