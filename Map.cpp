@@ -120,26 +120,30 @@ void Map::printMap(Pos pos)
 	loadimage(0, L"rsc/background1.jpg");
 	for (int i = 0; i < Cols; ++i)//i->map[i][]
 	{
-
 		for (int j = 0; j < Rows; ++j) 
 		{
 			switch (map[i][j]) {
+			case 1:
+				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
+				break;
+			case 2:
+			case 667:
+			case 11:
+				putimagePNG(FormTransx(i), FormTransy(j), &BoxImg);
+				break;
+			case 10:
+				putimagePNG(FormTransx(i), FormTransy(j), &DoorImg);
+				break;
 			case 666:
 				putimagePNG(FormTransx(i), FormTransy(j), &TacoImg);
 				//putimagePNG(FormTransx(i), FormTransy(j), &BoxImg);
-				
+				break;
 			case -1:
 				putimagePNG(FormTransx(i), FormTransy(j), &FireImg);
 				break;
 			case 0:
 				break;
-			case 1:
-				putimagePNG(FormTransx(i), FormTransy(j), &BarrierImg);
-				break;
-			case 2:
 			
-				putimagePNG(FormTransx(i), FormTransy(j), &BoxImg);
-				break;
 			
 			
 
@@ -149,6 +153,11 @@ void Map::printMap(Pos pos)
 
 
 	
+}
+
+void Map::updateMap()
+{
+	++level;
 }
 
 void Map::setPlayer(int x, int y)
@@ -183,12 +192,24 @@ double Map::FormTransy(double posn)
 
 bool Map::accessible(int x,int y)
 {
-	return x >= 0 && y >= 0 && x < Cols && y < Rows &&( map[x][y] == 0 ||map[x][y] == -1||map[x][y]==666);
+	return x >= 0 && y >= 0 && x < Cols && y < Rows 
+		&&( map[x][y] == 0 ||map[x][y] == -1
+		||map[x][y]==666||map[x][y]==10);
 }
 
 bool Map::accessible(Pos pos)
 {
-	return pos.x >= 0 && pos.y >= 0 && pos.x < Cols && pos.y < Rows && (map[pos.x][pos.y] == 0 || map[pos.x][pos.y] == -1|| map[pos.x][pos.y] == 666);
+	return pos.x >= 0 && pos.y >= 0 && pos.x < Cols 
+		&& pos.y < Rows && (map[pos.x][pos.y] == 0 || map[pos.x][pos.y] == -1
+			|| map[pos.x][pos.y] == 666||map[pos.x][pos.y]==10);
+}
+
+bool Map::won(Pos pos)
+{
+	if (map[pos.x][pos.y] == 10)
+		return 1;
+	else
+		return 0;
 }
 
 bool Map::is2(Pos pos)
@@ -201,9 +222,38 @@ bool Map::is2(int x, int y)
 	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == 2;
 }
 
+bool Map::is1(int x, int y)
+{
+	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == 1;
+}
+
 bool Map::ism2(int x, int y)
 {
 	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == -2;
+}
+
+bool Map::is11(int x, int y)
+{
+	if (x >= 0 && y >= 0 && x < Cols && y < Rows) {
+
+
+		if (map[x][y] == 11)
+			return 1;
+		else
+			return 0;
+	}
+	return 0;
+}
+
+bool Map::is667(int x, int y)
+{
+	if (x >= 0 && y >= 0 && x < Cols && y < Rows) {
+		if (map[x][y] == 667)
+			return 1;
+		else
+			return 0;
+	}
+	return 0;
 }
 
 void Map::layBomb(Pos pos)
@@ -239,7 +289,7 @@ void Map::box()
 {
 	for (int i = 2; i < Cols; ++i) {
 		for (int j = 2; j < Rows; ++j) {
-			int r = rand() % 10;
+			int r = rand() % 100;
 			if (r < 1&&accessible(i,j))
 				map[i][j] = 2;
 		}
@@ -252,8 +302,19 @@ void Map::taco()
 	do {
 		 x = rand() % Cols;
 		 y = rand() % Rows;
-	} while (is2(x, y));
-	map[x][y] = 666;
+	} while (is2(x, y)||is1(x,y));
+	map[x][y] = 667;
+	//putimagePNG(FormTransx(x), FormTransy(y), &TacoImg);
+}
+
+void Map::door()
+{
+	int x, y;
+	do {
+		x = rand() % Cols+1;
+		y = rand() % Rows+1;
+	} while (is2(x, y)||is1(x,y));
+	map[x][y] = 11;
 	//putimagePNG(FormTransx(x), FormTransy(y), &TacoImg);
 }
 
@@ -270,18 +331,40 @@ int Map::searchM(int x, int y)
 	return map[x][y];
 }
 
-void Map::setM(Pos pos, int g)
+void Map::setF(Pos pos, int g)
 {
 	if(accessible(pos)||is2(pos.x,pos.y)||ism2(pos.x,pos.y))
 	map[pos.x][pos.y] = g;
 }
 
-void Map::setM(int x, int y, int g)
+void Map::setF(int x, int y, int g)
 {
 	if(accessible(x,y)||is2(x,y)||ism2(x,y))//in case of overstep
 	map[x][y] = g;
 }
 
+
+
+void Map::setF1(int x, int y, int g)
+{
+	if ( accessible(x, y) || is2(x, y) || ism2(x, y))//in case of overstep
+		if (!(map[x][y] == 666 || map[x][y] == 10))
+			map[x][y] = g;
+}
+
+
+void Map::setM(int x, int y, int g)
+{
+	if(accessible(x,y))
+		map[x][y] = g;
+}
+
+void Map::setM1(int x, int y, int g)
+{
+	if (x >= 0 && y >= 0 && x < Cols && y < Rows
+		|| map[x][y] == 667 || map[x][y] == 11)
+		map[x][y] = g;
+}
 
 
 

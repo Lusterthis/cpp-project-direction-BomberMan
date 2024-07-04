@@ -39,6 +39,7 @@ class Map
 	IMAGE ENEMY1;
 	IMAGE TacoImg;
 	IMAGE BoxImg;
+	IMAGE DoorImg;
 	vector<vector<int>>map;
 	vector<vector<int>>status;
 public:
@@ -46,6 +47,7 @@ public:
 	Map(int marginX, int marginY, int Cols, int Rows) {
 		loadimage(&TacoImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
 		loadimage(&BoxImg, L"rsc/reanim/box.png", cellSize, cellSize, true);
+		loadimage(&DoorImg, L"rsc/reanim/door.png", cellSize, cellSize, true);
 		this->marginX = marginX;
 		this->marginY = marginY;
 		this->Rows =Rows ;
@@ -69,6 +71,7 @@ public:
 	int getLevel();
 	vector<vector<int>>& getMap();
 	void printMap(Pos pos);
+	void updateMap();
 	void setPlayer(int x,int y);//
 	void setPlayer(Pos pos);//function overload;
 	void leavePlayer(Pos pos);//
@@ -76,17 +79,25 @@ public:
 	double FormTransy(double n);
 	bool accessible(int x,int y);
 	bool accessible(Pos pos);
+	bool won(Pos pos);
 	bool is2(Pos pos);
 	bool is2(int x, int y);
+	bool is1(int x, int y);
 	bool ism2(int x, int y);
+	bool is11(int x,int y);
+	bool is667(int x, int y);
 	void layBomb(Pos pos);
 	void scene0();
 	void scenex();
 	void box();
 	void taco();
+	void door();
 	void BombBlow(int x,int y);
 	int searchM(int x, int y);
-	void setM(Pos pos,int g);
+	void setF(Pos pos,int g);
+	void setF(int x, int y, int g);
+	void setF1(int x, int y, int g);
 	void setM(int x, int y, int g);
+	void setM1(int x, int y, int g);
 };
 

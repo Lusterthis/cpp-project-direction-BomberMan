@@ -26,7 +26,7 @@ public:
     void action(ExMessage& msg, Map* m);
     void setPos(Pos posn);
     void blowUp(Map * m,int level);
-    IMAGE* getImg();
+    IMAGE* getImg();//同时有改变status的功能
     IMAGE* getImg2();
     int getX();
     int getY();

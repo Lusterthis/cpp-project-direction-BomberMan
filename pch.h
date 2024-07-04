@@ -6,7 +6,7 @@
 #include"graphics.h"
 using namespace std;
 
-//void putimagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
+//void putimage0PNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
 //{
 //	// 变量初始化
 //	DWORD* dst = GetImageBuffer();    // GetImageBuffer()函数，用于获取绘图设备的显存指针，EASYX自带

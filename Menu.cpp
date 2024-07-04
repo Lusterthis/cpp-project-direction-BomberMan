@@ -59,15 +59,70 @@ void Menu::display()
 			//Sleep(100);//可能用来测试
 			m=0;//jump out of menu
 		}
+		if (b && msg.message==WM_KEYDOWN//get the information of mouse, keyboard
+			&& msg.vkcode==VK_RETURN)
+		{
+			
+				switch (choice) {
+				case -1:
+					break;
+				case 0:
+					choice = 3;
+					break;
+				case 1:
+
+					putimage0PNG(length * 0.25, height * 0.526, &GameStartImg);
+					m = 0;
+					//进入游戏循环
+					break;
+				case 2:
+					putimage0PNG(length * 0.25, height * 0.676, &SetImg);
+					//set->display();
+					///////////////////////////////////////////跳转至set
+					break;
+				case 3:
+					putimage0PNG(length * 0.25, height * 0.830, &ShopImg);
+					break;
+				case 4:
+					choice = 1;
+					break;
+				}
+		}
 		if (b && msg.vkcode == VK_DOWN) {
-			putimage0PNG(10, 10, &GameStartImg);
-			m = 0;
+			if (choice == -1) { choice= 1; }
+			else {
+				choice += 1;
+			}
+		}
+		if (b && msg.vkcode == VK_UP) {
+			if (choice == -1) { choice = 1; }
+			else {
+				choice -= 1;
+			}
+		}
+		switch (choice) {
+		case -1:
+			break;
+		case 0:
+			choice = 3;
+			break;
+		case 1:
+
+			putimage0PNG(length * 0.25, height * 0.526, &GameStartImg);
+			break;
+		case 2:
+			putimage0PNG(length * 0.25, height * 0.676, &SetImg);
+			break;
+		case 3:
+			putimage0PNG(length * 0.25, height * 0.830, &ShopImg);
+			break;
+		case 4:
+			choice = 1;
+			break;
 		}
 		
-		
-		
 		FlushBatchDraw();// in case of flash
-		//Sleep(100);
+		Sleep(16);
 	}
 	
 	mciSendString(L"close rsc/bgm/menu.mp3", 0, 0, 0);

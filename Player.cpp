@@ -68,6 +68,11 @@ IMAGE* Player::getImg()
 	
 }
 
+IMAGE* Player::getImg1()
+{
+	return &loserImg;
+}
+
 int Player::getX()
 {
 	return pos.x;
@@ -88,13 +93,13 @@ void Player::setLevel(int l)
 	level = l;
 }
 
-void Player::beBlown(Map* m)
+void Player::beBlown(Map* m)//blown ÌØÐ§/Éý¼¶/door
 {
 
 	int s=m->searchM(pos.x,pos.y);
 	if (s == 666) {
 		this->level += 1;
-		m->setM(pos, 0);
+		m->setM(pos.x,pos.y, 0);
 
 	}
 	else if (s == -1) {
@@ -107,6 +112,9 @@ void Player::beBlown(Map* m)
 		//this->status = -3;
 		pos.x = 0, pos.y = 0;
 	}
+	else if (s == 10) {
+
+	}
 }
 
 bool Player::fail()
@@ -116,8 +124,7 @@ bool Player::fail()
 
 void Player::loserdraw(Map* m)
 {
-	system("cls");
-	putimagePNG(m->FormTransx(6), m->FormTransy(6), &loserImg);
-	Sleep(2000);
-	//system("pause");
+	putimagePNG(m->FormTransx(6), m->FormTransy(3), &loserImg);
+	FlushBatchDraw();
+	Sleep(3000);
 }

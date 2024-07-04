@@ -12,21 +12,22 @@ void Bomb::setPos(Pos posn)
 
 void Bomb::blowUp(Map* m,int level)
 {
+	
 	for (int i = 1; i <= level; ++i) {
 		if (status  > 45&&status<75) {
-			m->setM(pos, -1);
-			m->setM(pos.x + i, pos.y, -1);
-			m->setM(pos.x - i, pos.y, -1);
-			m->setM(pos.x, pos.y + i, -1);
-			m->setM(pos.x, pos.y - i, -1);
+			m->setF1(pos.x,pos.y, -1);
+			m->setF1(pos.x + i, pos.y, -1);
+			m->setF1(pos.x - i, pos.y, -1);
+			m->setF1(pos.x, pos.y + i, -1);
+			m->setF1(pos.x, pos.y - i, -1);
 		
 		}
 		else if (status>=75) {
-			m->setM(pos, 0);
-			m->setM(pos.x + i, pos.y, 0);
-			m->setM(pos.x - i, pos.y, 0);
-			m->setM(pos.x, pos.y + i, 0);
-			m->setM(pos.x, pos.y - i, 0);
+			m->setF1(pos.x,pos.y, 0);
+			m->setF1(pos.x + i, pos.y, 0);
+			m->setF1(pos.x - i, pos.y, 0);
+			m->setF1(pos.x, pos.y + i, 0);
+			m->setF1(pos.x, pos.y - i, 0);
 		}
 	}
 }

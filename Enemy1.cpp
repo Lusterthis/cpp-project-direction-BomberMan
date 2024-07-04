@@ -36,7 +36,7 @@ void Enemy1::action(ExMessage& msg, Map* m)
 	}
 	
 	state= 1;
-	m->setM(pos, 0);
+	m->setF(pos, 0);
 	int dir = random % 4;
 	switch (dir) {
 	case 0:
@@ -57,7 +57,7 @@ void Enemy1::action(ExMessage& msg, Map* m)
 		break;
 
 	}
-	m->setM(pos, -2);
+	m->setF(pos, -2);
 }
 
 Pos Enemy1::getPos()

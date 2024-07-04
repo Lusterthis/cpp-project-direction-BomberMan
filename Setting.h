@@ -1,5 +1,5 @@
 #pragma once
-
+//#include"pch.h"
 class Setting
 {
 private:
@@ -18,6 +18,7 @@ public:
 		clength = CSIZE;
 		cheight = CSIZE;
 	}
+	void display();
 	void setmx(int x);
 	void setmy(int y);
 	void setl(int l);

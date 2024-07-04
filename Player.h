@@ -22,7 +22,7 @@ public:
 		loadimage(&player2Img, L"rsc/reanim/player2.png", cellSize, cellSize, true);
 		loadimage(&player3Img, L"rsc/reanim/player3.png", cellSize, cellSize, true);
 		loadimage(&player4Img, L"rsc/reanim/player4.png", cellSize, cellSize, true);
-		loadimage(&loserImg, L"rsc/lose.jpg", cellSize, cellSize, true);
+		loadimage(&loserImg, L"rsc/lose.jpg", 775, 394, true);
 	};
 	void action (ExMessage &msg,Map * m);
 	//bool destroy(Map* m);
@@ -31,6 +31,7 @@ public:
 	IMAGE loserImg;
 
 	IMAGE* getImg();
+	IMAGE* getImg1();//±∏”√
 	int getX();
 	int getY();
 	int getLevel();
