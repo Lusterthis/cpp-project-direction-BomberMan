@@ -46,8 +46,8 @@ public:
 	
 	Map(int marginX, int marginY, int Cols, int Rows) {
 		loadimage(&TacoImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
-		loadimage(&BoxImg, L"rsc/reanim/box.png", cellSize, cellSize, true);
-		loadimage(&DoorImg, L"rsc/reanim/door.png", cellSize, cellSize, true);
+		loadimage(&BoxImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
+		loadimage(&DoorImg, L"rsc/reanim/door2.png", cellSize, cellSize, true);
 		this->marginX = marginX;
 		this->marginY = marginY;
 		this->Rows =Rows ;
@@ -84,6 +84,7 @@ public:
 	bool is2(int x, int y);
 	bool is1(int x, int y);
 	bool ism2(int x, int y);
+	bool is10(Pos pos);
 	bool is11(int x,int y);
 	bool is667(int x, int y);
 	void layBomb(Pos pos);

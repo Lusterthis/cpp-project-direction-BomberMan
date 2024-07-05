@@ -50,6 +50,9 @@ void putimagePNG(int x, int y, IMAGE* picture) //x为载入图片的X坐标，y为Y坐标
 Map::Map(Setting* set)
 {
 	loadimage(&TacoImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
+	loadimage(&BoxImg, L"rsc/reanim/taco.png", cellSize, cellSize, true);
+	loadimage(&DoorImg, L"rsc/reanim/door2.png", cellSize, cellSize, true);
+	
 	loadimage(&BoxImg, L"rsc/reanim/box.png", cellSize, cellSize, true);
 	this->marginX = set->retmx();
 	this->marginY = set->retmy();
@@ -230,6 +233,11 @@ bool Map::is1(int x, int y)
 bool Map::ism2(int x, int y)
 {
 	return x >= 0 && y >= 0 && x < Cols && y < Rows && map[x][y] == -2;
+}
+
+bool Map::is10(Pos pos)
+{
+	return pos.x >= 0 && pos.y >= 0 && pos.x < Cols && pos.y < Rows && map[pos.x][pos.y] == 10;
 }
 
 bool Map::is11(int x, int y)

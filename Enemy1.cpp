@@ -7,6 +7,7 @@ IMAGE* Enemy1::getImg()
 }
 IMAGE* Enemy1::freeImg()
 {
+	--state;
 	return &freedImg;
 }
 void Enemy1::setr(int r)
@@ -27,7 +28,6 @@ void Enemy1::setPos(Map* m)
 
 void Enemy1::action(ExMessage& msg, Map* m)
 {
-	
 	beBlown(m);
 	if (state == -1) { return; }
 	if (state <= 20) {//slow down the speed of the enemy

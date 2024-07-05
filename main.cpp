@@ -16,6 +16,8 @@ int main() {
 
 		game.play1();
 
+		//game.play2();
+
 	}
 
 }
